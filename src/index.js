@@ -4,15 +4,16 @@ import {
   selectRandomWords
 } from './libpwgen/password.js';
 
-function genpw() {
+function genpw({
+  minLength = 3,
+  maxLength = 5,
+  numberOfWords = 2,
+  count = 1,
+  delimiter = '-',
+  prepend = '',
+  append = ''
+} = {}) {
   const wordList = [];
-  const minLength = 3;
-  const maxLength = 5;
-  const numberOfWords = 2;
-  const count = 1;
-  const delimiter = '-';
-  const prepend = '';
-  const append = '';
 
   generateEligibleWords(wordList, minLength, maxLength, numberOfWords, count);
 
