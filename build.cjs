@@ -16,7 +16,7 @@ async function main() {
     platform: 'node',
     bundle: true,
     write: false,
-    format: 'cjs',
+    format: 'esm',
     jsx: 'transform',
     loader: {
       '.js': 'jsx'
