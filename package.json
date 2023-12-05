@@ -5,8 +5,7 @@
   "description": "",
   "main": "dist/index.js",
   "exports": {
-    "./path/to/function1.js": "./path/to/function1.js",
-    "./path/to/function2.js": "./path/to/function2.js"
+    ".": "./src/index.js"
   },
   "scripts": {
     "test": ""
