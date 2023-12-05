@@ -23,4 +23,4 @@ function genpw() {
   return pw;
 }
 
-export default genpw;
+export { genpw };
