@@ -5,6 +5,14 @@ Port of [rolandwarburton/pwgen](https://github.com/RolandWarburton/pwgen) which 
 Unfortunately googles Manifest V3 does not have any reasonable support for
 WASM so the portability of pwgen to the web was limited. Enter pwgen-js.
 
+## Example usage
+
+```js
+import { genpw } from 'pwgen';
+
+console.log(genpw());
+```
+
 ## Credits
 
 [eff.org/dice](https://www.eff.org/dice) for a well authored word list.
