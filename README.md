@@ -5,6 +5,12 @@ Port of [rolandwarburton/pwgen](https://github.com/RolandWarburton/pwgen) which 
 Unfortunately googles Manifest V3 does not have any reasonable support for
 WASM so the portability of pwgen to the web was limited. Enter pwgen-js.
 
+## Installing
+
+```none
+npm install @rolandwarburton/pwgen
+```
+
 ## Example usage
 
 ```js
