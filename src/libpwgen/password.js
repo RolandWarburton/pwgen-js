@@ -68,7 +68,7 @@ function selectRandomWords(eligibleWords, numberOfWords, iterator) {
 async function getRandomSymbol() {
   const symbols = ['!', '@', '#', '$', '%', '^', '&'];
   const randomIndexFunc = getRandomValue();
-  const randomIndex = await randomIndexFunc(0, symbols.length);
+  const randomIndex = await randomIndexFunc(0, symbols.length - 1);
   return symbols[randomIndex];
 }
 
