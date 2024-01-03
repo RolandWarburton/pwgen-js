@@ -10,7 +10,8 @@ mv pwgen-1.0.0.tgz ../pwgen-js-test/
 
 # from the test code
 cd ../pwgen-js-test
-npm install pwgen-1.0.0.tgz
+rm package-lock.json node_modules/ -rf
+npm i
 node index.js
 ```
 
