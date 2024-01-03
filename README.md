@@ -16,7 +16,8 @@ npm install @rolandwarburton/pwgen
 ```js
 import { genpw } from 'pwgen';
 
-console.log(genpw());
+const pw = await genpw()
+console.log(pw);
 ```
 
 ## Credits
