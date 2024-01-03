@@ -4,7 +4,7 @@ import {
   selectRandomWords
 } from './libpwgen/password.js';
 
-function genpw({
+async function genpw({
   minLength = 3,
   maxLength = 5,
   numberOfWords = 2,
@@ -19,7 +19,7 @@ function genpw({
 
   const words = selectRandomWords(wordList, numberOfWords, 0 * numberOfWords);
 
-  const pw = constructPassword(words, delimiter, prepend, append);
+  const pw = await constructPassword(words, delimiter, prepend, append);
 
   return pw;
 }
