@@ -1,6 +1,3 @@
-// src/libpwgen/password.js
-import { randomInt } from "crypto";
-
 // src/libpwgen/wordlist.js
 var wordList = [
   "abacus",
@@ -7782,6 +7779,25 @@ var wordList = [
 ];
 
 // src/libpwgen/password.js
+async function randomIntNode(min, max) {
+  const crypto = await import("crypto");
+  const buffer = crypto.randomBytes(4);
+  return Math.floor(buffer.readUInt32BE(0) % (max - min + 1)) + min;
+}
+function randomIntBrowser(min, max) {
+  const array = new Uint32Array(1);
+  window.crypto.getRandomValues(array);
+  return array[0] % (max - min + 1) + min;
+}
+function getRandomValue() {
+  let randomInt;
+  if (typeof window !== "undefined" && window.crypto && window.crypto.getRandomValues) {
+    randomInt = randomIntBrowser;
+  } else {
+    randomInt = randomIntNode;
+  }
+  return randomInt;
+}
 function generateEligibleWords(words, minLength, maxLength, numberOfWords, count) {
   var lines = wordList;
   var eligibleWords = [];
@@ -7810,12 +7826,13 @@ function selectRandomWords(eligibleWords, numberOfWords, iterator) {
   }
   return words;
 }
-function getRandomSymbol() {
+async function getRandomSymbol() {
   const symbols = ["!", "@", "#", "$", "%", "^", "&"];
-  const randomIndex = randomInt(0, symbols.length);
+  const randomIndexFunc = getRandomValue();
+  const randomIndex = await randomIndexFunc(0, symbols.length - 1);
   return symbols[randomIndex];
 }
-function constructPassword(words, delimiter, prepended, appended) {
+async function constructPassword(words, delimiter, prepended, appended) {
   let password = "";
   for (let i = 0; i < words.length; i++) {
     password += words[i];
@@ -7824,8 +7841,9 @@ function constructPassword(words, delimiter, prepended, appended) {
     }
   }
   if (!appended) {
-    const randomNumber = randomInt(1, 11);
-    const randomSymbol = getRandomSymbol();
+    const randomNumberFunc = getRandomValue();
+    const randomNumber = await randomNumberFunc(1, 11);
+    const randomSymbol = await getRandomSymbol();
     appended = `${delimiter}${randomNumber}${randomSymbol}`;
   }
   password = `${prepended}${password}${appended}`;
@@ -7833,7 +7851,7 @@ function constructPassword(words, delimiter, prepended, appended) {
 }
 
 // src/index.js
-function genpw({
+async function genpw({
   minLength = 3,
   maxLength = 5,
   numberOfWords = 2,
@@ -7845,7 +7863,7 @@ function genpw({
   const wordList2 = [];
   generateEligibleWords(wordList2, minLength, maxLength, numberOfWords, count);
   const words = selectRandomWords(wordList2, numberOfWords, 0 * numberOfWords);
-  const pw = constructPassword(words, delimiter, prepend, append);
+  const pw = await constructPassword(words, delimiter, prepend, append);
   return pw;
 }
 export {
