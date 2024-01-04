@@ -8,6 +8,19 @@ node build.cjs
 npm pack
 mv pwgen-1.0.0.tgz ../pwgen-js-test/
 
+```
+
+Update package.json to import import the tar file
+
+```json
+{
+  "dependencies": {
+    "@rolandwarburton/pwgen": "file:rolandwarburton-pwgen-1.0.0.tgz"
+  }
+}
+```
+
+```bash
 # from the test code
 cd ../pwgen-js-test
 rm package-lock.json node_modules/ -rf
