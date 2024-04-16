@@ -28,14 +28,14 @@ function getRandomValue() {
 
 function generateEligibleWords(words, minLength, maxLength, numberOfWords, count) {
   // create lines from the input string
-  var lines = wordList;
+  const lines = wordList;
 
   // Create a channel to collect eligible words
-  var eligibleWords = [];
+  const eligibleWords = [];
 
-  for (var i = 0; i < lines.length; i++) {
-    var line = lines[i];
-    var length = line.length;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const length = line.length;
     if (length > minLength && length <= maxLength) {
       eligibleWords.push(line);
     }
@@ -46,8 +46,8 @@ function generateEligibleWords(words, minLength, maxLength, numberOfWords, count
   }
 
   // Generate a random index and select a word
-  for (var i = 0; i < numberOfWords * count; i++) {
-    var randomIndex = Math.floor(Math.random() * eligibleWords.length);
+  for (let i = 0; i < numberOfWords * count; i++) {
+    const randomIndex = Math.floor(Math.random() * eligibleWords.length);
     words.push(eligibleWords[randomIndex]);
   }
 }
