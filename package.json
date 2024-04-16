@@ -1,5 +1,6 @@
 {
   "name": "pwgen",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -8,12 +9,18 @@
     "./path/to/function2.js": "./path/to/function2.js"
   },
   "scripts": {
-    "test": ""
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "esbuild": "^0.19.8"
+    "esbuild": "^0.19.8",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "chai": "^5.1.0"
   }
 }
