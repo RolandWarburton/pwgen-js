@@ -48,6 +48,11 @@ function getRandomSymbol() {
 
 function constructPassword(words, delimiter, prepended, appended) {
   let password = '';
+
+  if (words.length === 0) {
+    return password;
+  }
+
   for (let i = 0; i < words.length; i++) {
     password += words[i];
     if (i !== words.length - 1) {
