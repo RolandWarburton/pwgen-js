@@ -1,5 +1,30 @@
-import { randomInt } from 'crypto';
 import { wordList } from './wordlist.js';
+
+// import crypto if running in node environment
+async function randomIntNode(min, max) {
+  const crypto = await import('crypto');
+
+  const buffer = crypto.randomBytes(4);
+  return Math.floor(buffer.readUInt32BE(0) % (max - min + 1)) + min;
+}
+
+// use the browser crypto if running in browser environment
+function randomIntBrowser(min, max) {
+  const array = new Uint32Array(1);
+  window.crypto.getRandomValues(array);
+  return (array[0] % (max - min + 1)) + min;
+}
+
+// wraps random int based on environment
+function getRandomValue() {
+  let randomInt;
+  if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+    randomInt = randomIntBrowser;
+  } else {
+    randomInt = randomIntNode;
+  }
+  return randomInt;
+}
 
 function generateEligibleWords(words, minLength, maxLength, numberOfWords, count) {
   // create lines from the input string
@@ -40,13 +65,14 @@ function selectRandomWords(eligibleWords, numberOfWords, iterator) {
   return words;
 }
 
-function getRandomSymbol() {
+async function getRandomSymbol() {
   const symbols = ['!', '@', '#', '$', '%', '^', '&'];
-  const randomIndex = randomInt(0, symbols.length);
+  const randomIndexFunc = getRandomValue();
+  const randomIndex = await randomIndexFunc(0, symbols.length - 1);
   return symbols[randomIndex];
 }
 
-function constructPassword(words, delimiter, prepended, appended) {
+async function constructPassword(words, delimiter, prepended, appended) {
   let password = '';
 
   if (words.length === 0) {
@@ -61,8 +87,9 @@ function constructPassword(words, delimiter, prepended, appended) {
   }
 
   if (!appended) {
-    const randomNumber = randomInt(1, 11);
-    const randomSymbol = getRandomSymbol();
+    const randomNumberFunc = getRandomValue();
+    const randomNumber = await randomNumberFunc(1, 11);
+    const randomSymbol = await getRandomSymbol();
     appended = `${delimiter}${randomNumber}${randomSymbol}`;
   }
 

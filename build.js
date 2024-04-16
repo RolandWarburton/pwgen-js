@@ -1,10 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const { build } = require('esbuild');
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { build } from 'esbuild';
 
 function makeTemp(name) {
-  if (!fs.existsSync(`./${name}`)) {
-    fs.mkdirSync(`./${name}`);
+  if (!existsSync(`./${name}`)) {
+    mkdirSync(`./${name}`);
   }
 }
 
@@ -16,19 +15,13 @@ async function main() {
     platform: 'node',
     bundle: true,
     write: false,
-    format: 'cjs',
-    jsx: 'transform',
-    loader: {
-      '.js': 'jsx'
-    },
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment'
+    format: 'esm'
   }).catch((err) => {
     console.log(err);
     process.exit(1);
   });
 
   const content = result.outputFiles[0].text;
-  fs.writeFileSync('dist/index.js', content);
+  writeFileSync('dist/index.js', content);
 }
 main();
